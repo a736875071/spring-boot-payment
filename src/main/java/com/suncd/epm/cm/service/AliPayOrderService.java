@@ -29,6 +29,7 @@ public interface AliPayOrderService {
      */
     AlipayTradePrecreateResponse createPayQrCode(Long orderId);
 
+
     /**
      * 取消支付单
      *

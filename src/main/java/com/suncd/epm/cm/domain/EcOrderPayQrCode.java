@@ -12,4 +12,5 @@ import java.util.List;
 public class EcOrderPayQrCode {
     private Long orderId;
     private Long operatorId;
+    private String money;
 }

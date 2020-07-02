@@ -37,18 +37,18 @@ public class AliPayOrderController {
      * @return
      */
     @PostMapping(value = "/create-qr-code")
-    public AlipayTradePrecreateResponse createOrderPayQrCode(@Validated @RequestBody EcOrderPayQrCode ecOrderPayQrCode) {
+    public AlipayTradePrecreateResponse preCreateOrderPayQrCode(@Validated @RequestBody EcOrderPayQrCode ecOrderPayQrCode) {
         return aliPayOrderService.createOrderPayQrCode(ecOrderPayQrCode);
     }
 
     /**
-     * 直接生成二维码,不做数据校验
+     * 交易预创建,直接生成二维码,不做数据校验
      *
      * @param orderId
      * @return
      */
     @PostMapping(value = "/create-qr-code-test")
-    public AlipayTradePrecreateResponse createPayQrCode(Long orderId) {
+    public AlipayTradePrecreateResponse preCreatePayQrCode(Long orderId) {
         return aliPayOrderService.createPayQrCode(orderId);
     }
 
@@ -206,24 +206,31 @@ public class AliPayOrderController {
         log.debug("User-Agent:{}", userAgent);
         Map<String, String[]> parameterMap = httpServletRequest.getParameterMap();
         log.debug("请求参数是:{}", new Gson().toJson(parameterMap));
-        String agent = userAgent.toLowerCase();
+        String outTradeNo = parameterMap.get("outTradeNo")[0];
         String from = "null";
-        if (agent.indexOf("micromessenger") > 0) {
+        if (userAgent.contains("MicroMessenger")) {
             log.debug("微信扫码支付");
-        } else if (agent.indexOf("alipayclient") > 0) {
+            from = "<p style=\"text-align:center\">" +
+                "我没有进行企业认证,目前没有对接微信..." +
+                "</p>";
+        } else if (userAgent.contains("Alipay")) {
             //用户使用支付宝访问页面
             log.debug("支付宝扫码支付");
-            String outTradeNo = parameterMap.get("outTradeNo")[0];
             from = aliPayOrderService.aliWapPay(outTradeNo);
+            //直接将完整的表单html输出到页面
+            httpServletResponse.setContentType("text/html;charset=utf-8");
+            httpServletResponse.getWriter().write(from);
+            httpServletResponse.getWriter().flush();
         } else {
             from = "<p style=\"text-align:center\">" +
-                "没用的界面" +
+                "使用微信或支付宝支付" +
                 "</p>";
+            //直接将完整的表单html输出到页面
+            httpServletResponse.setContentType("text/html;charset=utf-8");
+            httpServletResponse.getWriter().write(from);
+            httpServletResponse.getWriter().flush();
         }
-        //直接将完整的表单html输出到页面
-        httpServletResponse.setContentType("text/html;charset=utf-8");
-        httpServletResponse.getWriter().write(from);
-        httpServletResponse.getWriter().flush();
+
     }
 
 }

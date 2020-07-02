@@ -80,7 +80,11 @@ public class ZxingUtils {
     public static void main(String[] args) throws Exception {
         //二维码中保存的信息
         String outTradeNo = String.valueOf(System.currentTimeMillis());
-        String content = "http://外网地址xx/trade/wap/pay?outTradeNo=" + outTradeNo;
+//        String content = "http://205v2077a1.imwork.net:58663/weixinLogin?_ijt=s4eqf7d3lj0q1pgptndof19f6r";
+//        String content = "http://dev-scm.canguanwuyou.com/api/v1/mall/test-order/wx-pay-test?_ijt=s4eqf7d3lj0q1pgptndof19f6r";
+//        String content = "http://205v2077a1.imwork.net:58663/api/wechat/check?_ijt=s4eqf7d3lj0q1pgptndof19f6r";
+//        String content = "http://205v2077a1.imwork.net:58663/trade/wap/pay?outTradeNo="+outTradeNo;
+        String content = "http://205v2077a1.imwork.net:58663/WXJSAPI.html?outTradeNo="+outTradeNo;
         //生成的二维码保存的路径
         String path = "C:/Users/change/Desktop/";
         MultiFormatWriter multiFormatWrite = new MultiFormatWriter();
@@ -90,7 +94,7 @@ public class ZxingUtils {
         //生成二维码
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
         BitMatrix bitMatrix = multiFormatWrite.encode(content, BarcodeFormat.QR_CODE, 400, 400, hints);
-        File file1 = new File(path, sdf.format(new Date()) + ".jpg");
+        File file1 = new File(path, outTradeNo + ".jpg");
         // 写入文件
         writeToFile(bitMatrix, "jpg", file1);
         System.out.println("二维码图片生成成功！");
