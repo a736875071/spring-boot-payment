@@ -2,23 +2,24 @@ package com.suncd.epm.cm.config;
 
 import com.alipay.api.internal.util.file.IOUtils;
 import com.github.wxpay.sdk.WXPayConfig;
-import lombok.Data;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.stereotype.Service;
 import org.springframework.util.ResourceUtils;
 
 import javax.annotation.PostConstruct;
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 
 /**
  * @author YangQ
  * @date 2020-06-29 14:13
  */
-@Data
+@Getter
 @Configuration
 @Slf4j
 public class WxMyConfig implements WXPayConfig {
@@ -34,13 +35,15 @@ public class WxMyConfig implements WXPayConfig {
     private String certPath;
     @Value("${wx.authorizeUrl}")
     private String authorizeUrl;
+    @Value("${wx.notifyUrl}")
+    private String notifyUrl;
     private static final String CLASS_PATH = "classpath:";
     private byte[] certData;
 
     @PostConstruct
     private void initCert() {
         try {
-            InputStream certStream ;
+            InputStream certStream;
             if (certPath.startsWith(CLASS_PATH)) {
                 certStream = new ClassPathResource(certPath).getInputStream();
             } else {

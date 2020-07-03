@@ -15,8 +15,10 @@
 
 <script>
     $(function () {
+        //这个openId需要通过授权code 换取
+        var openId = "xxxx";
         $.ajax({
-            url: "http://205v2077a1.imwork.net:58663/wx/js-api/place?openId=o6jEVv6pKcLDWFmP5_JMGHXiEyLA" ,
+            url: "http://205v2077a1.imwork.net:58663/wx/js-api/place?openId=" + openId,
             method: "GET",
             success: function (data) {
                 console.log("wx.config() ---> 接收后台返回的参数");

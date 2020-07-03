@@ -200,7 +200,7 @@ public class AliPayOrderController {
      * @param httpServletResponse
      * @throws Exception
      */
-    @RequestMapping("trade/wap/pay")
+    @RequestMapping(value = "trade/wap/pay", method = RequestMethod.GET)
     public void wapPay(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws Exception {
         String userAgent = httpServletRequest.getHeader("User-Agent");
         log.debug("User-Agent:{}", userAgent);
