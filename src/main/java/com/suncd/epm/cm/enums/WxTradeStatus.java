@@ -11,14 +11,35 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum WxTradeStatus {
     /**
-     * 成功
+     * 支付成功
      */
     SUCCESS("SUCCESS"),
 
     /**
-     * 失败
+     * 转入退款
      */
-    FAIL("FAIL");
+    REFUND("REFUND"),
+    /**
+     * 未支付
+     */
+    NOTPAY("NOTPAY"),
+    /**
+     * 已关闭
+     */
+    CLOSED("CLOSED"),
+    /**
+     * 已撤销
+     */
+    REVOKED("REVOKED"),
+    /**
+     * 用户支付中
+     */
+    USERPAYING("USERPAYING"),
+    /**
+     * 支付失败
+     */
+    PAYERROR("PAYERROR"),
+    ;
     private String value;
 
 

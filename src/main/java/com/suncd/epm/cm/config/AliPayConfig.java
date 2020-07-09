@@ -13,23 +13,23 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @Data
 public class AliPayConfig {
-    @Value("${open_api_domain}")
+    @Value("${ali.open_api_domain}")
     private String serverUrl;
-    @Value("${appid}")
+    @Value("${ali.appid}")
     private String appId;
-    @Value("${private_key}")
+    @Value("${ali.private_key}")
     private String privateKey;
-    @Value("${alipay_public_key}")
+    @Value("${ali.alipay_public_key}")
     private String aliPayPublicKey;
-    @Value("${sign_type}")
+    @Value("${ali.sign_type}")
     private String signType;
-    @Value("${notify_url}")
+    @Value("${ali.notify_url}")
     private String notifyUrl;
-    @Value("${format}")
+    @Value("${ali.format}")
     private String format;
-    @Value("${charset}")
+    @Value("${ali.charset}")
     private String charset;
-    @Value("${timeout_express}")
+    @Value("${ali.timeout_express}")
     private String timeoutExpress;
 
     @Bean

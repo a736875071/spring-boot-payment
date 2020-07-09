@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <title>二码合一</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no"/>
+    <script type="text/javascript" src="//cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script type="text/javascript" src="//static.runoob.com/assets/qrcode/qrcode.min.js"></script>
+</head>
+<body>
+<div style="text-align: center;">
+    <input type="hidden" id="ip-oid" value=""/>
+    <h1>支付宝-微信二码合一测试!!!</h1>
+    <div id="qrCode" class="code-img" style="display: inline-block;"></div>
+    <div class="pay-tag">
+        <p>使用微信或支付宝扫码支付</p>
+        </p>
+    </div>
+</div>
+<script>
+    new QRCode(document.getElementById("qrCode"), {
+        text: "http://205v2077a1.imwork.net:58663/trade/wap/pay",
+        width: 200,
+        height: 200
+    });
+</script>
+</body>
+</html>

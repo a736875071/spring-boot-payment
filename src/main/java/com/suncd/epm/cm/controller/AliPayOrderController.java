@@ -3,7 +3,6 @@ package com.suncd.epm.cm.controller;
 import com.alipay.api.response.AlipayDataBillSellQueryResponse;
 import com.alipay.api.response.AlipayTradePrecreateResponse;
 import com.alipay.api.response.AlipayTradeQueryResponse;
-import com.google.gson.Gson;
 import com.suncd.epm.cm.domain.EcOrderPayQrCode;
 import com.suncd.epm.cm.domain.TradeBillSellQuery;
 import com.suncd.epm.cm.service.AliPayOrderService;
@@ -13,7 +12,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
 import static java.lang.Math.random;
@@ -190,47 +188,6 @@ public class AliPayOrderController {
         }
         log.debug("支付宝侧同步回调结束...");
         return "failure";
-    }
-
-    /**
-     * 手机支付api(通过生成的二维码唤醒支付宝支付)
-     * 1.需要调用ZxingUtils main方法生成我二维码
-     *
-     * @param httpServletRequest
-     * @param httpServletResponse
-     * @throws Exception
-     */
-    @RequestMapping(value = "trade/wap/pay", method = RequestMethod.GET)
-    public void wapPay(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws Exception {
-        String userAgent = httpServletRequest.getHeader("User-Agent");
-        log.debug("User-Agent:{}", userAgent);
-        Map<String, String[]> parameterMap = httpServletRequest.getParameterMap();
-        log.debug("请求参数是:{}", new Gson().toJson(parameterMap));
-        String outTradeNo = parameterMap.get("outTradeNo")[0];
-        String from = "null";
-        if (userAgent.contains("MicroMessenger")) {
-            log.debug("微信扫码支付");
-            from = "<p style=\"text-align:center\">" +
-                "我没有进行企业认证,目前没有对接微信..." +
-                "</p>";
-        } else if (userAgent.contains("Alipay")) {
-            //用户使用支付宝访问页面
-            log.debug("支付宝扫码支付");
-            from = aliPayOrderService.aliWapPay(outTradeNo);
-            //直接将完整的表单html输出到页面
-            httpServletResponse.setContentType("text/html;charset=utf-8");
-            httpServletResponse.getWriter().write(from);
-            httpServletResponse.getWriter().flush();
-        } else {
-            from = "<p style=\"text-align:center\">" +
-                "使用微信或支付宝支付" +
-                "</p>";
-            //直接将完整的表单html输出到页面
-            httpServletResponse.setContentType("text/html;charset=utf-8");
-            httpServletResponse.getWriter().write(from);
-            httpServletResponse.getWriter().flush();
-        }
-
     }
 
 }

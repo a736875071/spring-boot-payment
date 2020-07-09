@@ -77,8 +77,12 @@ https://opendocs.alipay.com/apis/api_1/alipay.trade.query
     下步操作
     
     c.支付宝主要是通过调用api创建订单,然后通过HttpServletResponse返回页面来达到目的
+    
+    d.微信是使用JsApi来实现唤醒微信app
 
  1):应用需要添加手机网站支付能力(https://b.alipay.com/signing/productDetailV2.htm?productId=I1011000290000001001)
+ 
+ 2)要测试需要先生成二维码(调用ZxingUtils.main()),
  
  
  

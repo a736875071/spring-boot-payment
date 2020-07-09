@@ -13,7 +13,6 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Map;
@@ -21,6 +20,7 @@ import java.util.Map;
 /**
  * <p>
  * 使用了google zxing作为二维码生成工具
+ *
  * @author change
  */
 public class ZxingUtils {
@@ -80,11 +80,7 @@ public class ZxingUtils {
     public static void main(String[] args) throws Exception {
         //二维码中保存的信息
         String outTradeNo = String.valueOf(System.currentTimeMillis());
-//        String content = "http://205v2077a1.imwork.net:58663/weixinLogin?_ijt=s4eqf7d3lj0q1pgptndof19f6r";
-//        String content = "http://dev-scm.canguanwuyou.com/api/v1/mall/test-order/wx-pay-test?_ijt=s4eqf7d3lj0q1pgptndof19f6r";
-//        String content = "http://205v2077a1.imwork.net:58663/api/wechat/check?_ijt=s4eqf7d3lj0q1pgptndof19f6r";
-//        String content = "http://205v2077a1.imwork.net:58663/trade/wap/pay?outTradeNo="+outTradeNo;
-        String content = "http://205v2077a1.imwork.net:58663/WXJSAPI.html?outTradeNo="+outTradeNo;
+        String content = "http://205v2077a1.imwork.net:58663/trade/wap/pay?outTradeNo=" + outTradeNo;
         //生成的二维码保存的路径
         String path = "C:/Users/change/Desktop/";
         MultiFormatWriter multiFormatWrite = new MultiFormatWriter();

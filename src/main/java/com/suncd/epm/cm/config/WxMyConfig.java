@@ -37,6 +37,8 @@ public class WxMyConfig implements WXPayConfig {
     private String authorizeUrl;
     @Value("${wx.notifyUrl}")
     private String notifyUrl;
+    @Value("${wx.openId}")
+    private String openId;
     private static final String CLASS_PATH = "classpath:";
     private byte[] certData;
 

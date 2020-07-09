@@ -1,5 +1,10 @@
 package com.suncd.epm.cm.service;
 
+import com.suncd.epm.cm.domain.WxChatBaseCondition;
+import com.suncd.epm.cm.domain.WxChatRefundCondition;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
 /**
@@ -27,5 +32,52 @@ public interface WxPayOrderService {
      */
     Map<String, String> nativeCreatePayQrCode(String outTradeNo, String money);
 
+    /**
+     * native 统一下单(必填参数)
+     *
+     * @param outTradeNo 外部订单号
+     * @param money      下单金额
+     * @return 结果
+     */
+    Map<String, String> h5CreatePayQrCode(String outTradeNo, String money);
 
+    /**
+     * 下载交易账单
+     *
+     * @param billDate 账单日
+     * @return 结果
+     */
+    Map<String, String> downLoadBill(String billDate);
+
+    /**
+     * 订单详情查询
+     *
+     * @param condition 条件
+     * @return 结果
+     */
+    Map<String, String> orderQuery(WxChatBaseCondition condition);
+
+    /**
+     * 关闭订单
+     *
+     * @param outTradeNo
+     * @return
+     */
+    Map<String, String> closeOrder(String outTradeNo);
+
+    /**
+     * 退款
+     *
+     * @param condition
+     * @return
+     */
+    Map<String, String> refund(WxChatRefundCondition condition);
+
+    /**
+     * 获取用户openId
+     * @param request
+     * @param response
+     * @return
+     */
+    String handleWeChatBrow(HttpServletRequest request, HttpServletResponse response);
 }
