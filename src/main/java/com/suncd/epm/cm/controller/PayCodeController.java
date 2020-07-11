@@ -50,7 +50,7 @@ public class PayCodeController {
         //这个是前端传值(测试改为系统时间)
 //        String outTradeNo = parameterMap.get("outTradeNo")[0];
         String outTradeNo = String.valueOf(System.currentTimeMillis());
-        String from = "null";
+        String form = "null";
         ModelAndView mav = new ModelAndView();
         if (userAgent.contains("MicroMessenger")) {
             log.debug("微信扫码支付");
@@ -64,7 +64,6 @@ public class PayCodeController {
             if (openId != null) {
                 Map<String, String> wxMap = wxPayOrderService.jsApiCreateOrderPayQrCode(String.valueOf(System.currentTimeMillis()),
                     "1", openId);
-                wxMap.put("result", "succ");
                 mav.addAllObjects(wxMap);
             }
             mav.setViewName("temp");
@@ -72,21 +71,24 @@ public class PayCodeController {
         } else if (userAgent.contains("Alipay")) {
             //用户使用支付宝访问页面
             log.debug("支付宝扫码支付");
-            from = aliPayOrderService.aliWapPay(outTradeNo);
-            Map<String, String> aliMap = new HashMap<>();
-            aliMap.put("from", from);
-            mav.addAllObjects(aliMap);
-            //直接将完整的表单html输出到页面
+            form = aliPayOrderService.aliWapPay(outTradeNo);
+            //两种返回唤醒支付宝app
+            //第一种:返回form到页面temp.html页面,根据js  $("html").append(form);来唤醒app,相比第二种中间多跳转了一次temp.html
+//            Map<String, String> aliMap = new HashMap<>();
+//            aliMap.put("form", form);
+//            mav.addAllObjects(aliMap);
+            mav.setViewName("temp");
+            //第二种:直接将完整的表单html输出到页面
             httpServletResponse.setContentType("text/html;charset=utf-8");
-            httpServletResponse.getWriter().write(from);
+            httpServletResponse.getWriter().write(form);
             httpServletResponse.getWriter().flush();
         } else {
-            from = "<p style=\"text-align:center\">" +
-                "使用微信或支付宝支付" +
+            form = "<p style=\"text-align:center\">" +
+                "使用微信或支付宝支付扫码支付" +
                 "</p>";
             //直接将完整的表单html输出到页面
             httpServletResponse.setContentType("text/html;charset=utf-8");
-            httpServletResponse.getWriter().write(from);
+            httpServletResponse.getWriter().write(form);
             httpServletResponse.getWriter().flush();
         }
         return mav;
