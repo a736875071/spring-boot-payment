@@ -105,7 +105,7 @@ public class PayCodeController {
     }
 
     /**
-     * 作为跳转二维码的页面接口
+     * 电脑网站支付页面入口
      *
      * @return
      */

@@ -82,7 +82,11 @@ https://opendocs.alipay.com/apis/api_1/alipay.trade.query
 
  1):应用需要添加手机网站支付能力(https://b.alipay.com/signing/productDetailV2.htm?productId=I1011000290000001001)
  
- 2)要测试需要先生成二维码(调用ZxingUtils.main()),
+ 2)要测试需要先生成二维码(调用ZxingUtils.main()),或者通过 hhtp://localhost:8082/trade/wap/index  进入测试页面
+ 
+ 5.电脑网站支付(https://opendocs.alipay.com/open/270/106291)
+    
+    通过 hhtp://localhost:8082/trade/page/index  进入测试页面
  
  
  
