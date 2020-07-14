@@ -265,11 +265,12 @@ public class AliPayOrderServiceImpl implements AliPayOrderService {
                 return response.getBillDownloadUrl();
             } else {
                 System.out.println("调用失败");
-                return response.getSubMsg();
+                throw new RuntimeException("调用失败");
             }
         } catch (AlipayApiException e) {
-            return e.getErrMsg();
+            e.printStackTrace();
         }
+        return null;
     }
 
     @Override

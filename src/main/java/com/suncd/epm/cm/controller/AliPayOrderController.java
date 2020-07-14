@@ -12,6 +12,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.Map;
 
 import static java.lang.Math.random;
@@ -129,8 +131,13 @@ public class AliPayOrderController {
      * @return
      */
     @GetMapping("/trades/bill-download")
-    public String getTradesBillDownload(@RequestParam("billDate") String billDate) {
-        return aliPayOrderService.tradesBillDownload(billDate);
+    public void getTradesBillDownload(@RequestParam("billDate") String billDate, HttpServletResponse response) {
+        String downLoadUrl = aliPayOrderService.tradesBillDownload(billDate);
+        try {
+            response.sendRedirect(downLoadUrl);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
