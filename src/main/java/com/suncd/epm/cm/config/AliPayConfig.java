@@ -25,6 +25,8 @@ public class AliPayConfig {
     private String signType;
     @Value("${ali.notify_url}")
     private String notifyUrl;
+    @Value("${ali.return_url}")
+    private String returnUrl;
     @Value("${ali.format}")
     private String format;
     @Value("${ali.charset}")

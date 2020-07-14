@@ -61,7 +61,7 @@ public class WeChatController {
     }
 
     /**
-     * 微信native统一下单
+     * 微信h5统一下单
      *
      * @return
      */
@@ -71,7 +71,7 @@ public class WeChatController {
     }
 
     /**
-     * 微信native统一下单
+     * 微信对账文件下载
      *
      * @return
      */
@@ -83,6 +83,7 @@ public class WeChatController {
     /**
      * 通过微信订单号查询订单信息
      * (交易成功订单:4200000583202007099025731587)
+     * (交易成功订单:4200000593202007140505791362)
      *
      * @param condition 条件
      * @return

@@ -1,10 +1,7 @@
 package com.suncd.epm.cm.service;
 
-import com.alipay.api.response.AlipayDataBillSellQueryResponse;
-import com.alipay.api.response.AlipayTradePrecreateResponse;
-import com.alipay.api.response.AlipayTradeQueryResponse;
-import com.suncd.epm.cm.domain.EcOrderPayQrCode;
-import com.suncd.epm.cm.domain.TradeBillSellQuery;
+import com.alipay.api.response.*;
+import com.suncd.epm.cm.domain.*;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -47,20 +44,36 @@ public interface AliPayOrderService {
     String tradeCancelByOutTradeNo(String outTradeNo);
 
     /**
+     * 交易关闭
+     * @param condition 条件
+     * @return 结果
+     */
+    boolean tradeClose(AliBaseCondition condition);
+
+    /**
      * 商户退款
      *
-     * @param outTradeNo
+     * @param returnPayBizContent
      * @return
      */
-    String tradeRefundByOutTradeNo(String outTradeNo);
+    String tradeRefundByOutTradeNo(PayBizContent returnPayBizContent);
+
+    /**
+     * 交易退款查询
+     *
+     * @param condition 条件
+     * @return 结果
+     */
+    AlipayTradeFastpayRefundQueryResponse tradeRefundQuery(AliRefundQueryCondition condition);
+
 
     /**
      * 通过交易订单号查询支付侧订单
      *
-     * @param outTradeNo
+     * @param condition
      * @return
      */
-    AlipayTradeQueryResponse getTradesByOutTradeNo(String outTradeNo);
+    AlipayTradeQueryResponse getTradesQuery(AliBaseCondition condition);
 
     /**
      * 支付宝商家账户卖出交易查询
@@ -94,4 +107,12 @@ public interface AliPayOrderService {
      * @return
      */
     String aliWapPay(String outTradeNo);
+
+    /**
+     * 电脑网站支付
+     *
+     * @param payBizContent
+     * @return
+     */
+    AlipayTradePagePayResponse aliPagePay(PayBizContent payBizContent);
 }

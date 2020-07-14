@@ -1,10 +1,7 @@
 package com.suncd.epm.cm.controller;
 
-import com.alipay.api.response.AlipayDataBillSellQueryResponse;
-import com.alipay.api.response.AlipayTradePrecreateResponse;
-import com.alipay.api.response.AlipayTradeQueryResponse;
-import com.suncd.epm.cm.domain.EcOrderPayQrCode;
-import com.suncd.epm.cm.domain.TradeBillSellQuery;
+import com.alipay.api.response.*;
+import com.suncd.epm.cm.domain.*;
 import com.suncd.epm.cm.service.AliPayOrderService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,6 +50,25 @@ public class AliPayOrderController {
     }
 
     /**
+     * 电脑网站支付
+     *
+     * @param request
+     * @param response
+     * @return
+     */
+    @PostMapping(value = "/page/pay")
+    public void pagePay(PayBizContent payBizContent, HttpServletRequest request, HttpServletResponse response) {
+        AlipayTradePagePayResponse aliResponse = aliPayOrderService.aliPagePay(payBizContent);
+        response.setContentType("text/html;charset=utf-8");
+        try {
+            response.getWriter().write(aliResponse.getBody());
+            response.getWriter().flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
      * 取消二维码
      * 如果生成的二维码没有扫码,则删除本地支付单
      * 如果已经扫码,则取消支付侧订单
@@ -76,25 +92,48 @@ public class AliPayOrderController {
      * @param outTradeNo
      * @return
      */
-    @PutMapping("/trades/cancel")
+    @PostMapping("/trades/cancel")
     public String tradeCancelByOutTradeNo(@RequestParam("outTradeNo") String outTradeNo) {
         return aliPayOrderService.tradeCancelByOutTradeNo(outTradeNo);
     }
 
     /**
-     * 收单交易退款(一笔全退)
+     * 交易关闭
+     * 用于交易创建后，用户在一定时间内未进行支付，可调用该接口直接将未付款的交易进行关闭。
+     *
+     * @param condition
+     * @return
+     */
+    @PostMapping("/trades/close")
+    public boolean tradeClose(AliBaseCondition condition) {
+        return aliPayOrderService.tradeClose(condition);
+    }
+
+    /**
+     * 收单交易退款
      * 当交易发生之后一段时间内，由于买家或者卖家的原因需要退款时，卖家可以通过退款接口将支付款退还给买家，
      * 支付宝将在收到退款请求并且验证成功之后，按照退款规则将支付款按原路退到买家帐号上。
      * 交易超过约定时间（签约时设置的可退款时间）的订单无法进行退款 支付宝退款支持单笔交易分多次退款，
      * 多次退款需要提交原支付订单的商户订单号和设置不同的退款单号。
      * 一笔退款失败后重新提交，要采用原来的退款单号。总退款金额不能超过用户实际支付金额
      *
-     * @param outTradeNo
+     * @param returnPayBizContent
      * @return
      */
-    @PutMapping("/trades/refund")
-    public String tradeRefundByOutTradeNo(@RequestParam("outTradeNo") String outTradeNo) {
-        return aliPayOrderService.tradeRefundByOutTradeNo(outTradeNo);
+    @PostMapping("/trades/refund")
+    public String tradeRefund(PayBizContent returnPayBizContent) {
+        return aliPayOrderService.tradeRefundByOutTradeNo(returnPayBizContent);
+    }
+
+    /**
+     * 交易退款查询
+     *
+     * @param condition 查询条件
+     * @return 结果
+     */
+    @GetMapping("/trades/refund-query")
+    public AlipayTradeFastpayRefundQueryResponse tradeRefundQuery(AliRefundQueryCondition condition) {
+        return aliPayOrderService.tradeRefundQuery(condition);
     }
 
     /**
@@ -105,12 +144,12 @@ public class AliPayOrderController {
      * 调用alipay.trade.pay，返回INPROCESS的状态；
      * 调用alipay.trade.cancel之前，需确认支付状态；
      *
-     * @param outTradeNo
+     * @param condition
      * @return
      */
     @GetMapping("/trades/trade-no")
-    public AlipayTradeQueryResponse getTradesByOutTradeNo(@RequestParam("outTradeNo") String outTradeNo) {
-        return aliPayOrderService.getTradesByOutTradeNo(outTradeNo);
+    public AlipayTradeQueryResponse getTradesByOutTradeNo(AliBaseCondition condition) {
+        return aliPayOrderService.getTradesQuery(condition);
     }
 
     /**

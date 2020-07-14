@@ -101,4 +101,18 @@ public class PayBizContent {
     @SerializedName("refund_amount")
     private String refundAmount;
 
+    /**
+     * 退款金额(商户退款使用)
+     */
+    @SerializedName("refund_reason")
+    private String refundReason;
+
+    /**
+     * 电脑网站支付使用
+     * 销售产品码，与支付宝签约的产品码名称。()
+     * 注：目前仅支持FAST_INSTANT_TRADE_PAY
+     */
+    @SerializedName("product_code")
+    private String productCode;
+
 }

@@ -13,7 +13,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -66,7 +65,7 @@ public class PayCodeController {
                     "1", openId);
                 mav.addAllObjects(wxMap);
             }
-            mav.setViewName("temp");
+            mav.setViewName("wap/pay/temp");
             log.debug("返回信息:" + mav);
         } else if (userAgent.contains("Alipay")) {
             //用户使用支付宝访问页面
@@ -77,7 +76,7 @@ public class PayCodeController {
 //            Map<String, String> aliMap = new HashMap<>();
 //            aliMap.put("form", form);
 //            mav.addAllObjects(aliMap);
-            mav.setViewName("temp");
+            mav.setViewName("/wap/pay/temp");
             //第二种:直接将完整的表单html输出到页面
             httpServletResponse.setContentType("text/html;charset=utf-8");
             httpServletResponse.getWriter().write(form);
@@ -102,6 +101,16 @@ public class PayCodeController {
      */
     @RequestMapping(value = "trade/wap/index", method = RequestMethod.GET)
     public String wapPay() {
-        return "index";
+        return "/wap/pay/index";
+    }
+
+    /**
+     * 作为跳转二维码的页面接口
+     *
+     * @return
+     */
+    @RequestMapping(value = "trade/page/index", method = RequestMethod.GET)
+    public String pagePay() {
+        return "/page/pagePay";
     }
 }
