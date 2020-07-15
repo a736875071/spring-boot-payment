@@ -1,7 +1,8 @@
 package com.suncd.epm.cm.controller;
 
 import com.alipay.api.response.*;
-import com.suncd.epm.cm.domain.*;
+import com.google.gson.Gson;
+import com.suncd.epm.cm.domain.ali.pay.*;
 import com.suncd.epm.cm.service.AliPayOrderService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,7 @@ import static java.lang.Math.random;
 public class AliPayOrderController {
     @Autowired
     private AliPayOrderService aliPayOrderService;
+    private Gson gson = new Gson();
 
 
     /**
@@ -222,17 +224,27 @@ public class AliPayOrderController {
         return "failure";
     }
 
-    @PostMapping("/trades/payment/return-url")
+    /**
+     * 此接口是支付宝同步回调接口,返回的是json数据,不是html页面,如果需要返回页面调用
+     * PayCodeController:get  /ali/trades/payment/return-url
+     *
+     * @param request
+     * @return
+     */
+    @GetMapping("/trades/payment/return-url")
     public String paymentAliReturnUrl(HttpServletRequest request) {
+        log.debug("支付宝说同步回调不可靠...是否支付成功,需要根据返回的订单号查询订单状态确定");
         log.debug("支付宝侧同步回调开始...");
+        Map<String, String[]> parmMap = request.getParameterMap();
+        log.debug("同步回调参数是:{}", gson.toJson(parmMap));
         //模拟回调异常
         int a = (int) (random() * 10);
         if (a / 2 == 0) {
-            Map<String, String[]> parmMap = request.getParameterMap();
-            log.debug("接受到同步回调信息:{},开始处理相关业务", parmMap);
+
+            log.debug("接受到同步回调信息:{},开始处理相关业务", gson.toJson(parmMap));
             return "success";
         }
-        log.debug("支付宝侧同步回调结束...");
+        log.debug("支付宝侧同步回调异常...");
         return "failure";
     }
 

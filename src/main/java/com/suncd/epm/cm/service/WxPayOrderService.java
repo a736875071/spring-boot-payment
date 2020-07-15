@@ -1,7 +1,7 @@
 package com.suncd.epm.cm.service;
 
-import com.suncd.epm.cm.domain.WxChatBaseCondition;
-import com.suncd.epm.cm.domain.WxChatRefundCondition;
+import com.suncd.epm.cm.domain.wx.WxChatBaseCondition;
+import com.suncd.epm.cm.domain.wx.WxChatRefundCondition;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

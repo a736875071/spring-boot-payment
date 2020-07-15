@@ -8,7 +8,7 @@ import com.alipay.api.request.*;
 import com.alipay.api.response.*;
 import com.google.gson.Gson;
 import com.suncd.epm.cm.config.AliPayConfig;
-import com.suncd.epm.cm.domain.*;
+import com.suncd.epm.cm.domain.ali.pay.*;
 import com.suncd.epm.cm.enums.AliTradeStatus;
 import com.suncd.epm.cm.utils.ZxingUtils;
 import lombok.extern.log4j.Log4j2;

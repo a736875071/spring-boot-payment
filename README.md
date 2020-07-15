@@ -46,6 +46,8 @@ timeout_express=5m
 
 #注意:
 
+本demo很多post,put,patch参数都没有加@RequestBody注解,是因为方便,实际项目请根据自身情况修改
+
 1.生成的付款二维码,如果没有扫描,通过
 https://opendocs.alipay.com/apis/api_1/alipay.trade.query
 是查询不到订单的
@@ -56,7 +58,12 @@ https://opendocs.alipay.com/apis/api_1/alipay.trade.query
  
  2):无论通过这个id生成多个订单信息变更的预支付订单二维码,最终都是根据第一个扫描二维码的信息生成支付宝订单,后续扫描其他二维码结果都是失败     
  
+ 3):本demo没有做定时轮询任务,查询订单完成状态,如果没有完成且符合轮询条件(时间,次数,订单状态等),继续轮询,反之则需要调用取消交易api,关闭订单
+    这个根据自身业务自行添加
+    
 3.支付宝回调后,需要系统返回一个字符串:failure/success
+
+    支付宝回调分为同步和异步回调,同步回调是get请求returnUrl,异步回调是post请求notifyUrl,之前一直同步回调没反应就是这个问题
 
     success:表示回调成功了,支付宝侧不会触发服务器异步通知页面特性 
     
@@ -88,6 +95,6 @@ https://opendocs.alipay.com/apis/api_1/alipay.trade.query
     
     通过 hhtp://localhost:8082/trade/page/index  进入测试页面
  
- 
+ 6.新增转账到支付宝api(目前由于文档不清,且沙箱环境有问题,已反馈处理中...后续更新)
  
  

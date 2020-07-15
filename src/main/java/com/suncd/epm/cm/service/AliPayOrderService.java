@@ -1,7 +1,7 @@
 package com.suncd.epm.cm.service;
 
 import com.alipay.api.response.*;
-import com.suncd.epm.cm.domain.*;
+import com.suncd.epm.cm.domain.ali.pay.*;
 
 import javax.servlet.http.HttpServletRequest;
 
