@@ -3,7 +3,6 @@ package com.suncd.epm.cm.controller;
 import com.alipay.api.response.AlipayFundAccountQueryResponse;
 import com.alipay.api.response.AlipayFundTransCommonQueryResponse;
 import com.alipay.api.response.AlipayFundTransUniTransferResponse;
-import com.google.gson.Gson;
 import com.suncd.epm.cm.domain.ali.trans.AliAccountQueryParm;
 import com.suncd.epm.cm.domain.ali.trans.AliTransCommonQueryParm;
 import com.suncd.epm.cm.domain.ali.trans.AliTransferParm;
@@ -17,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * 文档 https://opendocs.alipay.com/open/309/106237
+ * https://opendocs.alipay.com/open/309/106236
  *
  * @author YangQ
  * @date 2020/5/26 17:41
@@ -26,7 +26,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class AliTransferController {
     @Autowired
     private AliTransService aliTransService;
-    private Gson gson = new Gson();
 
 
     /**

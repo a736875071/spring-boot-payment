@@ -17,6 +17,36 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
+ * 这是一个资金类的服务必须使用证书,由于证书生效后不能再选择公钥验证,所以这没有进行更换
+ * 证书和秘钥主要区别在于 AlipayClient的注入和 alipayClient.execute改为alipayClient.certificateExecute
+ * 1.秘钥
+ * AlipayClient alipayClient=new DefaultAlipayClient
+ * (serverUrl, appId, privateKey, format,
+ * charset, aliPayPublicKey, signType);
+ * 2.证书
+ * CertAlipayRequest   certAlipayRequest   =   new   CertAlipayRequest ();
+ * certAlipayRequest . setServerUrl ( serverUrl );
+ * certAlipayRequest . setAppId ( appId );
+ * certAlipayRequest . setPrivateKey ( privateKey );
+ * certAlipayRequest . setFormat ( format );
+ * certAlipayRequest . setCharset ( charset );
+ * certAlipayRequest . setSignType ( signType );
+ * #开发者应用公钥证书路径
+ * certAlipayRequest . setCertPath ( app_cert_path );
+ * #支付宝公钥证书文件路径
+ * certAlipayRequest . setAlipayPublicCertPath ( alipay_cert_path );
+ * #支付宝CA根证书文件路径
+ * certAlipayRequest . setRootCertPath ( alipay_root_cert_path );
+ * AlipayClient alipayClient=new DefaultAlipayClient(certAlipayRequest);
+ * <p>
+ * # 构建request内容
+ * XXXRequest request= new  XXXRequest ();
+ * //
+ * xxxResponse response=  alipayClient.certificateExecute ( request );
+ * } catch  ( Exception   e ){
+ * //
+ * }
+ *
  * @author YangQ
  * @date 2020-07-15 14:00
  */
