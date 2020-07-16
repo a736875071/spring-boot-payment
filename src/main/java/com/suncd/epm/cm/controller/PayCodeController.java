@@ -7,6 +7,7 @@ import com.suncd.epm.cm.service.WxPayOrderService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -30,6 +31,7 @@ public class PayCodeController {
     private WxPayOrderService wxPayOrderService;
     @Autowired
     private WxMyConfig wxMyConfig;
+    private Gson gson = new Gson();
 
 
     /**
@@ -81,6 +83,7 @@ public class PayCodeController {
             httpServletResponse.setContentType("text/html;charset=utf-8");
             httpServletResponse.getWriter().write(form);
             httpServletResponse.getWriter().flush();
+            httpServletResponse.getWriter().close();
         } else {
             form = "<p style=\"text-align:center\">" +
                 "使用微信或支付宝支付扫码支付" +
@@ -89,6 +92,7 @@ public class PayCodeController {
             httpServletResponse.setContentType("text/html;charset=utf-8");
             httpServletResponse.getWriter().write(form);
             httpServletResponse.getWriter().flush();
+            httpServletResponse.getWriter().close();
         }
         return mav;
 
@@ -111,6 +115,24 @@ public class PayCodeController {
      */
     @RequestMapping(value = "trade/page/index", method = RequestMethod.GET)
     public String pagePay() {
+        return "/page/pagePay";
+    }
+
+
+    /**
+     * 支付宝支付成功后同步回调接口,此接口返回的同步页面,不是json,需要返回json调用
+     * AliPayOrderController:get  /trades/payment/return-url
+     *
+     * @param request
+     * @return
+     */
+    @GetMapping("/ali/trades/payment/return-url")
+    public String aliReturnUrl(HttpServletRequest request) {
+        log.debug("支付宝说同步回调不可靠...是否支付成功,需要根据返回的订单号查询订单状态确定");
+        log.debug("支付宝侧同步回调开始...");
+        Map<String, String[]> parmMap = request.getParameterMap();
+        log.debug("同步回调参数是:{}", gson.toJson(parmMap));
+        log.debug("支付宝侧同步回调结束...");
         return "/page/pagePay";
     }
 }

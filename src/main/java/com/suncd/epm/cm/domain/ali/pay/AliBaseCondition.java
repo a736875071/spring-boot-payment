@@ -1,4 +1,4 @@
-package com.suncd.epm.cm.domain;
+package com.suncd.epm.cm.domain.ali.pay;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

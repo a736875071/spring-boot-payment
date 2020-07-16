@@ -1,7 +1,7 @@
 package com.suncd.epm.cm.controller;
 
-import com.suncd.epm.cm.domain.WxChatBaseCondition;
-import com.suncd.epm.cm.domain.WxChatRefundCondition;
+import com.suncd.epm.cm.domain.wx.WxChatBaseCondition;
+import com.suncd.epm.cm.domain.wx.WxChatRefundCondition;
 import com.suncd.epm.cm.service.WxPayOrderService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

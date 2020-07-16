@@ -1,4 +1,4 @@
-package com.suncd.epm.cm.domain;
+package com.suncd.epm.cm.domain.ali.pay;
 
 import com.google.gson.annotations.SerializedName;
 import lombok.Data;
